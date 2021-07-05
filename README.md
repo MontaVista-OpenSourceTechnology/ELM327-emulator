@@ -1,5 +1,9 @@
 ELM327-emulator
 ===============
+CHANGES:
+to build dockerfile run this in elm folder (folder containing Dockerfile) -  docker build -t {name of container} . 
+    Currently set to connect to port 35000 as default
+    current issue: Terminates immediately (non-zero code error)
 
 __A Python emulator of the ELM327 OBD-II adapter connected to a vehicle supporting multi-ECU simulation.__
 

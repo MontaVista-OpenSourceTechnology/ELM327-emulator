@@ -1,3 +1,4 @@
+import random
 ###########################################################################
 # ELM327-emulator
 # ELM327 Emulator for testing software interfacing OBDII via ELM327 adapter
@@ -175,8 +176,8 @@ ObdMessage = {
             'Descr': 'AT DISPLAY KEY WORDS',
             'Log': '"Display keywords"',
             'ResponseFooter': lambda self, cmd, pid, uc_val:
-                self.counters["cmd_atkw"] + " " if "cmd_atkw" in self.counters
-                else "0 "
+                self.counters["cmd_atkw"] if "cmd_atkw" in self.counters
+                else "0"
         },
         'AT_SKW': {
             'Request': '^ATKW[01]$',
@@ -604,12 +605,23 @@ ObdMessage = {
         'ENGINE_LOAD': {
             'Request': '^0104' + ELM_FOOTER,
             'Descr': 'Calculated Engine Load',
-            'Response': PA('00')
+            'ResponseFooter': \
+            lambda self, cmd, pid, uc_val: (
+                PA(HD(ECU_R_ADDR_H) + SZ('03') + DT('41 04 '
+                + str(hex(random.randint(0, 255)))))
+            )
+            
+
         },
         'COOLANT_TEMP': {
             'Request': '^0105' + ELM_FOOTER,
             'Descr': 'Engine Coolant Temperature',
-            'Response': PA('7B')
+            #'Response': PA('7B')
+            'ResponseFooter': \
+            lambda self, cmd, pid, uc_val: (
+                PA(HD(ECU_R_ADDR_H) + SZ('03') + DT('41 05 '
+                + str(hex(random.randint(115, 145))))
+            ))
         },
         'INTAKE_PRESSURE': {
             'Request': '^010B' + ELM_FOOTER,
@@ -915,8 +927,8 @@ ObdMessage = {
 
     'car': {
     # AT Commands
-        'AT_DESCRIBE_PROTO': {
-            'Request': '^ATDP$',
+        'ELM_DP': {
+            'Request': '^AT DP' + ELM_FOOTER,
             'Descr': 'Current protocol',
             'Header': ECU_ADDR_E,
             'Response': [
@@ -924,7 +936,16 @@ ObdMessage = {
                         ST('AUTO, ISO 15765-4 (CAN 11/500) ')
                         ]
         },
-        'ELM_DESCR': {  # use AT_DESCR to replace the standard behaviour
+        'ELM_IGNITION': {
+            'Request': '^AT IGN' + ELM_FOOTER,
+            'Descr': 'IgnMon input level',
+            'Header': ECU_ADDR_E,
+            'Response': [
+                        ST('ON '),
+                        ST('? ')
+                        ]
+        },
+        'ELM_DESCR': {
             'Request': '^AT@1' + ELM_FOOTER,
             'Descr': 'Device description',
             'Header': ECU_ADDR_E,
