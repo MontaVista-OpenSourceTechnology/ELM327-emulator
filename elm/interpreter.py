@@ -55,6 +55,9 @@ DAEMON_PIDFILE_DIR_NON_ROOT = '/tmp/'
 DAEMON_PIDFILE = 'ELM327_emulator.pid'
 DAEMON_UMASK = 0o002
 DAEMON_DIR = '/tmp'
+#set vin number to zeros at first
+#vin_number = "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 01"
+
 
 
 class Edit:
@@ -866,6 +869,8 @@ class Interpreter(Cmd):
                 print("Terminating...")
                 sys.exit(0)
 
+def PA(pos_answer):
+    return ('<pos_answer>' + pos_answer + '</pos_answer>')
 
 def set_scenario(emulator, scenario):
     if scenario and scenario in [
@@ -875,6 +880,7 @@ def set_scenario(emulator, scenario):
         if scenario:
             print("Invalid scenario '%s'" % scenario)
         emulator.scenario = 'car'
+    emulator.ObdMessage[emulator.scenario]['VIN']['Response'] = PA(emulator.vin_number)
     emulator.set_sorted_obd_msg()
     print("Emulator scenario switched to '%s'" % emulator.scenario)
 
@@ -1030,6 +1036,17 @@ def main():
         nargs = 1,
         metavar = 'FORWARD_TIMEOUT'
     )
+    parser.add_argument(
+        '-A', '--vin_number',
+        dest = 'vin_number',
+        action = 'store',
+        help = "Set the vin number",
+        default = None,
+        nargs = 1,
+        metavar = 'vin_number'
+    )
+
+    
     args = parser.parse_args()
 
     if args.version:
@@ -1044,7 +1061,7 @@ def main():
         args.daemon_mode = False
         args.terminate = False
         os.system('color')  # enable the ANSI escape sequences with Windows
-
+    
     # Instantiate the class
     emulator = Elm(
         batch_mode=args.batch_mode or args.daemon_mode,
@@ -1067,7 +1084,9 @@ def main():
         forward_serial_baudrate = args.forward_serial_baudrate[0]
             if args.forward_serial_baudrate else None,
         forward_timeout = args.forward_timeout[0]
-            if args.forward_timeout else None)
+            if args.forward_timeout else None,
+        vin_number = args.vin_number
+            if args.vin_number else ["00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"])
 
     if os.name != 'nt':
         if os.getuid() == 0:

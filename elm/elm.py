@@ -316,7 +316,8 @@ class IsoTpMultiframe(Tasks):
             return Tasks.RETURN.PASSTHROUGH(self.req[:self.length * 2])
         return Tasks.RETURN.INCOMPLETE
 
-
+def PA(pos_answer):
+    return ('<pos_answer>' + pos_answer + '</pos_answer>')
 def setup_logging(
         default_path=Path(__file__).stem + '.yaml',
         default_level=logging.INFO,
@@ -515,12 +516,15 @@ class Elm:
             forward_net_port=None,
             forward_serial_port=None,
             forward_serial_baudrate=None,
-            forward_timeout=None):
+            forward_timeout=None,
+            vin_number = ["09 00 00 00 5A 5A 5A 39 39 "
+                           "5A 54 53 33 39 30 30 30 30"]):
         self.presets = {}
         self.ObdMessage = ObdMessage
         self.ELM_R_UNKNOWN = ELM_R_UNKNOWN
         self.set_defaults()
         self.set_sorted_obd_msg()
+        self.vin_number = str(vin_number[0])
         self.batch_mode = batch_mode
         self.newline = newline
         self.no_echo = no_echo
@@ -548,6 +552,8 @@ class Elm:
         self.request_timer = {}
         self.choice_mode = self.Choice.SEQUENTIAL
         self.choice_weights = [1]
+        self.ObdMessage[self.scenario]['VIN']['Response'] = PA(self.vin_number)
+        
 
     class Choice(Enum):
         SEQUENTIAL = 0

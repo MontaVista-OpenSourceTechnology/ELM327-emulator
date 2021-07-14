@@ -1,11 +1,12 @@
 import random
+#from .interpreter import vin_number
+#VIN_NUMBER = vin_number
 ###########################################################################
 # ELM327-emulator
 # ELM327 Emulator for testing software interfacing OBDII via ELM327 adapter
 # https://github.com/Ircama/ELM327-emulator
 # (C) Ircama 2021 - CC-BY-NC-SA-4.0
 ###########################################################################
-
 # List of known ECUs:
 ECU_ADDR_J = "747"
 ECU_R_ADDR_J = "74F"
@@ -827,12 +828,7 @@ ObdMessage = {
         'VIN': { # Check this also: https://stackoverflow.com/a/26752855/10598800, https://www.autocheck.com/vehiclehistory/autocheck/en/vinbasics
             'Request': '^0902' + ELM_FOOTER,
             'Descr': 'Vehicle Identification Number',
-            'Response': [
-                        PA("01 57 50 30 5A 5A 5A 39 39 "
-                           "5A 54 53 33 39 30 30 30 30"), # https://www.autodna.com/vin/WP0ZZZ99ZTS390000, https://it.vin-info.com/libro-denuncia/WP0ZZZ99ZTS390000
-                        PA("01 4D 41 54 34 30 33 30 39 "
-                           "36 42 4E 4C 30 30 30 30 30"), # https://community.carloop.io/t/how-to-request-vin/153/11
-                        ]
+            'Response': PA("00 00 00 00 00 00 00 00 00 00 ")
         },
         'CALIBRATION_ID_MESSAGE_COUNT': {
             'Request': '^0903' + ELM_FOOTER,
@@ -908,7 +904,7 @@ ObdMessage = {
             'Response': PA(''),
         },
         # ----------------------------------------------------------------------
-    # UDS commands used by MT05
+     # UDS commands used by MT05
         'UDS_START_COMM': {
             'Request': '^81' + ELM_FOOTER,
             'Descr': 'UDS Start Communication',
@@ -2225,14 +2221,8 @@ ObdMessage = {
             # https://www.autocheck.com/vehiclehistory/autocheck/en/vinbasics
             'Request': '^0902' + ELM_FOOTER,
             'Descr': 'Vehicle Identification Number',
-            'Response': [
-                PA('01 57 50 30 5A 5A 5A 39 39 5A 54 53 33 39 30 30 30 30'),
-                # https://www.autodna.com/vin/WP0ZZZ99ZTS390000,
-                # https://it.vin-info.com/libro-denuncia/WP0ZZZ99ZTS390000
-                PA('01 4D 41 54 34 30 33 30 39 36 42 4E 4C 30 30 30 30 30'),
-                # https://community.carloop.io/t/how-to-request-vin/153/11
-                PA('01 53 42 31 5A 53 33 4A 45 36 30 45 32 38 32 31 30 32')
-            ]
+            'Response':  PA("05 57 50 30 5A 5A 5A 39 39 "
+                           "5A 54 53 33 39 30 30 30 30")
         },
         'CALIBRATION_ID_MESSAGE_COUNT': {
             'Request': '^0903' + ELM_FOOTER,

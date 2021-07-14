@@ -1,6 +1,13 @@
 ELM327-emulator
 ===============
 
+CHANGING VIN THROUGH COMMAND LINE
+
+Using the -A tag followed by string to set the VIN number.
+
+```sh
+python3 -m elm -A "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+```
 __A Python emulator of the ELM327 OBD-II adapter connected to a vehicle supporting multi-ECU simulation.__
 
 *ELM327-emulator* connects client applications to multiple emulated [ECU](https://en.wikipedia.org/wiki/Engine_control_unit)s via [OBD-II](https://en.wikipedia.org/wiki/On-board_diagnostics) interface through different networking systems, including serial communication (where [pseudo-terminals](https://en.wikipedia.org/wiki/Pseudoterminal) are used if supported by the operating systems), or direct interaction with communication devices, or TCP/IP, or Bluetooth. The software simulates an [ELM327](https://en.wikipedia.org/wiki/ELM327) adapter connected to a vehicle, includes a command-line interface for extensive monitoring and offers a documented Python development framework to implement ECU emulation objects.
