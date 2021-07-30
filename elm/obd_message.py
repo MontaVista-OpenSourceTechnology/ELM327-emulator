@@ -4395,5 +4395,818 @@ ObdMessage = {
             'Descr': 'UDS Routine Control - stop',
             'Task': 'task_mt05_stop_routine'
         },
-    }
+    },
+    'LS7': {
+    # OBD Commands
+        'PIDS_A': {
+            'Request': '^0100' + ELM_FOOTER,
+            'Descr': 'Supported PIDs [01-20]',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('06') + DT('41 00 BF FF B9 93')
+        },
+        'STATUS': {
+            'Request': '^0101' + ELM_FOOTER,
+            'Descr': 'Status since DTCs cleared',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('06') + DT('41 01 00 04 60 00')
+        },
+        'FUEL_STATUS': {
+            'Request': '^0103' + ELM_FOOTER,
+            'Descr': 'Fuel System Status',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('04') + DT('41 03 00 00')
+        },
+        'ENGINE_LOAD': {
+            'Request': '^0104' + ELM_FOOTER,
+            'Descr': 'Calculated Engine Load',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('03') + DT('41 04 00')
+        },
+        'COOLANT_TEMP': {
+            'Request': '^0105' + ELM_FOOTER,
+            'Descr': 'Engine Coolant Temperature',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('03') + DT('41 05 4C')
+            # 36 degC
+        },
+        'SHORT_FUEL_TRIM_1': {
+            'Request': '^0106' + ELM_FOOTER,
+            'Descr': 'Short Term Fuel Trim - Bank 1',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('03') + DT('41 06 80')
+        },
+        'LONG_FUEL_TRIM_1': {
+            'Request': '^0107' + ELM_FOOTER,
+            'Descr': 'Long Term Fuel Trim - Bank 1',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('03') + DT('41 07 6A')
+            # -17.1875 percent
+        },
+        'SHORT_FUEL_TRIM_2': {
+            'Request': '^0108' + ELM_FOOTER,
+            'Descr': 'Short Term Fuel Trim - Bank 2',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('03') + DT('41 08 80')
+        },
+        'LONG_FUEL_TRIM_2': {
+            'Request': '^0109' + ELM_FOOTER,
+            'Descr': 'Long Term Fuel Trim - Bank 2',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('03') + DT('41 09 67')
+            # -19.53125 percent
+        },
+        'FUEL_PRESSURE': {
+            'Request': '^010A' + ELM_FOOTER,
+            'Descr': 'Fuel Pressure',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('03') + DT('41 0A 85')
+            # 399 kilopascal
+        },
+        'INTAKE_PRESSURE': {
+            'Request': '^010B' + ELM_FOOTER,
+            'Descr': 'Intake Manifold Pressure',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('03') + DT('41 0B 64')
+            # 100 kilopascal
+        },
+        'RPM': {
+            'Request': '^010C' + ELM_FOOTER,
+            'Descr': 'Engine RPM',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('04') + DT('41 0C 00 00')
+        },
+        'SPEED': {
+            'Request': '^010D' + ELM_FOOTER,
+            'Descr': 'Vehicle Speed',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('03') + DT('41 0D 00')
+        },
+        'TIMING_ADVANCE': {
+            'Request': '^010E' + ELM_FOOTER,
+            'Descr': 'Timing Advance',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('03') + DT('41 0E 92')
+            # 9.0 degree
+        },
+        'INTAKE_TEMP': {
+            'Request': '^010F' + ELM_FOOTER,
+            'Descr': 'Intake Air Temp',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('03') + DT('41 0F 53')
+            # 43 degC
+        },
+        'MAF': {
+            'Request': '^0110' + ELM_FOOTER,
+            'Descr': 'Air Flow Rate (MAF)',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('04') + DT('41 10 00 00')
+        },
+        'THROTTLE_POS': {
+            'Request': '^0111' + ELM_FOOTER,
+            'Descr': 'Throttle Position',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('03') + DT('41 11 4A')
+            # 29.019607843137255 percent
+        },
+        'O2_SENSORS': {
+            'Request': '^0113' + ELM_FOOTER,
+            'Descr': 'O2 Sensors Present',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('03') + DT('41 13 11')
+        },
+        'O2_B1S1': {
+            'Request': '^0114' + ELM_FOOTER,
+            'Descr': 'O2: Bank 1 - Sensor 1 Voltage',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('04') + DT('41 14 5A 80')
+            # 0.45 volt
+        },
+        'O2_B1S2': {
+            'Request': '^0115' + ELM_FOOTER,
+            'Descr': 'O2: Bank 1 - Sensor 2 Voltage',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('04') + DT('41 15 00 FF')
+        },
+        'O2_B2S1': {
+            'Request': '^0118' + ELM_FOOTER,
+            'Descr': 'O2: Bank 2 - Sensor 1 Voltage',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('04') + DT('41 18 5A 80')
+            # 0.45 volt
+        },
+        'O2_B2S2': {
+            'Request': '^0119' + ELM_FOOTER,
+            'Descr': 'O2: Bank 2 - Sensor 2 Voltage',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('04') + DT('41 19 00 FF')
+        },
+        'OBD_COMPLIANCE': {
+            'Request': '^011C' + ELM_FOOTER,
+            'Descr': 'OBD Standards Compliance',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('03') + DT('41 1C 0B')
+        },
+        'RUN_TIME': {
+            'Request': '^011F' + ELM_FOOTER,
+            'Descr': 'Engine Run Time',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('04') + DT('41 1F 00 00')
+        },
+        'PIDS_B': {
+            'Request': '^0120' + ELM_FOOTER,
+            'Descr': 'Supported PIDs [21-40]',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('06') + DT('41 20 80 07 E0 19')
+        },
+        'DISTANCE_W_MIL': {
+            'Request': '^0121' + ELM_FOOTER,
+            'Descr': 'Distance Traveled with MIL on',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('04') + DT('41 21 00 00')
+        },
+        'EVAPORATIVE_PURGE': {
+            'Request': '^012E' + ELM_FOOTER,
+            'Descr': 'Commanded Evaporative Purge',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('03') + DT('41 2E 00')
+        },
+        'FUEL_LEVEL': {
+            'Request': '^012F' + ELM_FOOTER,
+            'Descr': 'Fuel Level Input',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('03') + DT('41 2F 00')
+        },
+        'WARMUPS_SINCE_DTC_CLEAR': {
+            'Request': '^0130' + ELM_FOOTER,
+            'Descr': 'Number of warm-ups since codes cleared',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('03') + DT('41 30 01')
+            # 1.0 count
+        },
+        'DISTANCE_SINCE_DTC_CLEAR': {
+            'Request': '^0131' + ELM_FOOTER,
+            'Descr': 'Distance traveled since codes cleared',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('04') + DT('41 31 00 00')
+        },
+        'EVAP_VAPOR_PRESSURE': {
+            'Request': '^0132' + ELM_FOOTER,
+            'Descr': 'Evaporative system vapor pressure',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('04') + DT('41 32 1D 4C')
+            # 1875.0 pascal
+        },
+        'BAROMETRIC_PRESSURE': {
+            'Request': '^0133' + ELM_FOOTER,
+            'Descr': 'Barometric Pressure',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('03') + DT('41 33 65')
+            # 101 kilopascal
+        },
+        'CATALYST_TEMP_B1S1': {
+            'Request': '^013C' + ELM_FOOTER,
+            'Descr': 'Catalyst Temperature: Bank 1 - Sensor 1',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('04') + DT('41 3C 01 90')
+        },
+        'CATALYST_TEMP_B2S1': {
+            'Request': '^013D' + ELM_FOOTER,
+            'Descr': 'Catalyst Temperature: Bank 2 - Sensor 1',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('04') + DT('41 3D 01 90')
+        },
+        'PIDS_C': {
+            'Request': '^0140' + ELM_FOOTER,
+            'Descr': 'Supported PIDs [41-60]',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('06') + DT('41 40 FE D0 00 00')
+        },
+        'STATUS_DRIVE_CYCLE': {
+            'Request': '^0141' + ELM_FOOTER,
+            'Descr': 'Monitor status this drive cycle',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('06') + DT('41 41 00 04 60 40')
+        },
+        'CONTROL_MODULE_VOLTAGE': {
+            'Request': '^0142' + ELM_FOOTER,
+            'Descr': 'Control module voltage',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('04') + DT('41 42 2E E2')
+            # 12.002 volt
+        },
+        'ABSOLUTE_LOAD': {
+            'Request': '^0143' + ELM_FOOTER,
+            'Descr': 'Absolute load value',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('04') + DT('41 43 00 00')
+        },
+        'COMMANDED_EQUIV_RATIO': {
+            'Request': '^0144' + ELM_FOOTER,
+            'Descr': 'Commanded equivalence ratio',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('04') + DT('41 44 2E 40')
+            # 0.36112 ratio
+        },
+        'RELATIVE_THROTTLE_POS': {
+            'Request': '^0145' + ELM_FOOTER,
+            'Descr': 'Relative throttle position',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('03') + DT('41 45 2A')
+            # 16.470588235294116 percent
+        },
+        'AMBIANT_AIR_TEMP': {
+            'Request': '^0146' + ELM_FOOTER,
+            'Descr': 'Ambient air temperature',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('03') + DT('41 46 45')
+            # 29 degC
+        },
+        'THROTTLE_POS_B': {
+            'Request': '^0147' + ELM_FOOTER,
+            'Descr': 'Absolute throttle position B',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('03') + DT('41 47 49')
+            # 28.627450980392158 percent
+        },
+        'ACCELERATOR_POS_D': {
+            'Request': '^0149' + ELM_FOOTER,
+            'Descr': 'Accelerator pedal position D',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('03') + DT('41 49 33')
+            # 20.0 percent
+        },
+        'ACCELERATOR_POS_E': {
+            'Request': '^014A' + ELM_FOOTER,
+            'Descr': 'Accelerator pedal position E',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('03') + DT('41 4A 19')
+            # 9.803921568627452 percent
+        },
+        'THROTTLE_ACTUATOR': {
+            'Request': '^014C' + ELM_FOOTER,
+            'Descr': 'Commanded throttle actuator',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('03') + DT('41 4C 35')
+            # 20.784313725490197 percent
+        },
+        'DTC_STATUS': {
+            'Request': '^0201' + ELM_FOOTER,
+            'Descr': 'DTC Status since DTCs cleared',
+            'Header': ECU_ADDR_E,
+            'Response': 'NO DATA \r'
+        },
+        'DTC_FUEL_STATUS': {
+            'Request': '^0203' + ELM_FOOTER,
+            'Descr': 'DTC Fuel System Status',
+            'Header': ECU_ADDR_E,
+            'Response': 'NO DATA \r'
+        },
+        'DTC_ENGINE_LOAD': {
+            'Request': '^0204' + ELM_FOOTER,
+            'Descr': 'DTC Calculated Engine Load',
+            'Header': ECU_ADDR_E,
+            'Response': 'NO DATA \r'
+        },
+        'DTC_COOLANT_TEMP': {
+            'Request': '^0205' + ELM_FOOTER,
+            'Descr': 'DTC Engine Coolant Temperature',
+            'Header': ECU_ADDR_E,
+            'Response': 'NO DATA \r'
+            # -40 degC
+        },
+        'DTC_SHORT_FUEL_TRIM_1': {
+            'Request': '^0206' + ELM_FOOTER,
+            'Descr': 'DTC Short Term Fuel Trim - Bank 1',
+            'Header': ECU_ADDR_E,
+            'Response': 'NO DATA \r'
+            # -100.0 percent
+        },
+        'DTC_LONG_FUEL_TRIM_1': {
+            'Request': '^0207' + ELM_FOOTER,
+            'Descr': 'DTC Long Term Fuel Trim - Bank 1',
+            'Header': ECU_ADDR_E,
+            'Response': 'NO DATA \r'
+            # -100.0 percent
+        },
+        'DTC_SHORT_FUEL_TRIM_2': {
+            'Request': '^0208' + ELM_FOOTER,
+            'Descr': 'DTC Short Term Fuel Trim - Bank 2',
+            'Header': ECU_ADDR_E,
+            'Response': 'NO DATA \r'
+            # -100.0 percent
+        },
+        'DTC_LONG_FUEL_TRIM_2': {
+            'Request': '^0209' + ELM_FOOTER,
+            'Descr': 'DTC Long Term Fuel Trim - Bank 2',
+            'Header': ECU_ADDR_E,
+            'Response': 'NO DATA \r'
+            # -100.0 percent
+        },
+        'DTC_FUEL_PRESSURE': {
+            'Request': '^020A' + ELM_FOOTER,
+            'Descr': 'DTC Fuel Pressure',
+            'Header': ECU_ADDR_E,
+            'Response': 'NO DATA \r'
+        },
+        'DTC_INTAKE_PRESSURE': {
+            'Request': '^020B' + ELM_FOOTER,
+            'Descr': 'DTC Intake Manifold Pressure',
+            'Header': ECU_ADDR_E,
+            'Response': 'NO DATA \r'
+        },
+        'DTC_RPM': {
+            'Request': '^020C' + ELM_FOOTER,
+            'Descr': 'DTC Engine RPM',
+            'Header': ECU_ADDR_E,
+            'Response': 'NO DATA \r'
+        },
+        'DTC_SPEED': {
+            'Request': '^020D' + ELM_FOOTER,
+            'Descr': 'DTC Vehicle Speed',
+            'Header': ECU_ADDR_E,
+            'Response': 'NO DATA \r'
+        },
+        'DTC_TIMING_ADVANCE': {
+            'Request': '^020E' + ELM_FOOTER,
+            'Descr': 'DTC Timing Advance',
+            'Header': ECU_ADDR_E,
+            'Response': 'NO DATA \r'
+            # -64.0 degree
+        },
+        'DTC_INTAKE_TEMP': {
+            'Request': '^020F' + ELM_FOOTER,
+            'Descr': 'DTC Intake Air Temp',
+            'Header': ECU_ADDR_E,
+            'Response': 'NO DATA \r'
+            # -40 degC
+        },
+        'DTC_MAF': {
+            'Request': '^0210' + ELM_FOOTER,
+            'Descr': 'DTC Air Flow Rate (MAF)',
+            'Header': ECU_ADDR_E,
+            'Response': 'NO DATA \r'
+        },
+        'DTC_THROTTLE_POS': {
+            'Request': '^0211' + ELM_FOOTER,
+            'Descr': 'DTC Throttle Position',
+            'Header': ECU_ADDR_E,
+            'Response': 'NO DATA \r'
+        },
+        'DTC_O2_SENSORS': {
+            'Request': '^0213' + ELM_FOOTER,
+            'Descr': 'DTC O2 Sensors Present',
+            'Header': ECU_ADDR_E,
+            'Response': 'NO DATA \r'
+        },
+        'DTC_O2_B1S1': {
+            'Request': '^0214' + ELM_FOOTER,
+            'Descr': 'DTC O2: Bank 1 - Sensor 1 Voltage',
+            'Header': ECU_ADDR_E,
+            'Response': 'NO DATA \r'
+        },
+        'DTC_O2_B1S2': {
+            'Request': '^0215' + ELM_FOOTER,
+            'Descr': 'DTC O2: Bank 1 - Sensor 2 Voltage',
+            'Header': ECU_ADDR_E,
+            'Response': 'NO DATA \r'
+        },
+        'DTC_O2_B2S1': {
+            'Request': '^0218' + ELM_FOOTER,
+            'Descr': 'DTC O2: Bank 2 - Sensor 1 Voltage',
+            'Header': ECU_ADDR_E,
+            'Response': 'NO DATA \r'
+        },
+        'DTC_O2_B2S2': {
+            'Request': '^0219' + ELM_FOOTER,
+            'Descr': 'DTC O2: Bank 2 - Sensor 2 Voltage',
+            'Header': ECU_ADDR_E,
+            'Response': 'NO DATA \r'
+        },
+        'DTC_OBD_COMPLIANCE': {
+            'Request': '^021C' + ELM_FOOTER,
+            'Descr': 'DTC OBD Standards Compliance',
+            'Header': ECU_ADDR_E,
+            'Response': 'NO DATA \r'
+        },
+        'DTC_RUN_TIME': {
+            'Request': '^021F' + ELM_FOOTER,
+            'Descr': 'DTC Engine Run Time',
+            'Header': ECU_ADDR_E,
+            'Response': 'NO DATA \r'
+        },
+        'DTC_PIDS_B': {
+            'Request': '^0220' + ELM_FOOTER,
+            'Descr': 'DTC Supported PIDs [21-40]',
+            'Header': ECU_ADDR_E,
+            'Response': 'NO DATA \r'
+        },
+        'DTC_DISTANCE_W_MIL': {
+            'Request': '^0221' + ELM_FOOTER,
+            'Descr': 'DTC Distance Traveled with MIL on',
+            'Header': ECU_ADDR_E,
+            'Response': 'NO DATA \r'
+        },
+        'DTC_EVAPORATIVE_PURGE': {
+            'Request': '^022E' + ELM_FOOTER,
+            'Descr': 'DTC Commanded Evaporative Purge',
+            'Header': ECU_ADDR_E,
+            'Response': 'NO DATA \r'
+        },
+        'DTC_FUEL_LEVEL': {
+            'Request': '^022F' + ELM_FOOTER,
+            'Descr': 'DTC Fuel Level Input',
+            'Header': ECU_ADDR_E,
+            'Response': 'NO DATA \r'
+        },
+        'DTC_WARMUPS_SINCE_DTC_CLEAR': {
+            'Request': '^0230' + ELM_FOOTER,
+            'Descr': 'DTC Number of warm-ups since codes cleared',
+            'Header': ECU_ADDR_E,
+            'Response': 'NO DATA \r'
+        },
+        'DTC_DISTANCE_SINCE_DTC_CLEAR': {
+            'Request': '^0231' + ELM_FOOTER,
+            'Descr': 'DTC Distance traveled since codes cleared',
+            'Header': ECU_ADDR_E,
+            'Response': 'NO DATA \r'
+        },
+        'DTC_EVAP_VAPOR_PRESSURE': {
+            'Request': '^0232' + ELM_FOOTER,
+            'Descr': 'DTC Evaporative system vapor pressure',
+            'Header': ECU_ADDR_E,
+            'Response': 'NO DATA \r'
+        },
+        'DTC_BAROMETRIC_PRESSURE': {
+            'Request': '^0233' + ELM_FOOTER,
+            'Descr': 'DTC Barometric Pressure',
+            'Header': ECU_ADDR_E,
+            'Response': 'NO DATA \r'
+        },
+        'DTC_CATALYST_TEMP_B1S1': {
+            'Request': '^023C' + ELM_FOOTER,
+            'Descr': 'DTC Catalyst Temperature: Bank 1 - Sensor 1',
+            'Header': ECU_ADDR_E,
+            'Response': 'NO DATA \r'
+            # -40.0 degC
+        },
+        'DTC_CATALYST_TEMP_B2S1': {
+            'Request': '^023D' + ELM_FOOTER,
+            'Descr': 'DTC Catalyst Temperature: Bank 2 - Sensor 1',
+            'Header': ECU_ADDR_E,
+            'Response': 'NO DATA \r'
+            # -40.0 degC
+        },
+        'DTC_PIDS_C': {
+            'Request': '^0240' + ELM_FOOTER,
+            'Descr': 'DTC Supported PIDs [41-60]',
+            'Header': ECU_ADDR_E,
+            'Response': 'NO DATA \r'
+        },
+        'DTC_STATUS_DRIVE_CYCLE': {
+            'Request': '^0241' + ELM_FOOTER,
+            'Descr': 'DTC Monitor status this drive cycle',
+            'Header': ECU_ADDR_E,
+            'Response': 'NO DATA \r'
+        },
+        'DTC_CONTROL_MODULE_VOLTAGE': {
+            'Request': '^0242' + ELM_FOOTER,
+            'Descr': 'DTC Control module voltage',
+            'Header': ECU_ADDR_E,
+            'Response': 'NO DATA \r'
+        },
+        'DTC_ABSOLUTE_LOAD': {
+            'Request': '^0243' + ELM_FOOTER,
+            'Descr': 'DTC Absolute load value',
+            'Header': ECU_ADDR_E,
+            'Response': 'NO DATA \r'
+        },
+        'DTC_COMMANDED_EQUIV_RATIO': {
+            'Request': '^0244' + ELM_FOOTER,
+            'Descr': 'DTC Commanded equivalence ratio',
+            'Header': ECU_ADDR_E,
+            'Response': 'NO DATA \r'
+        },
+        'DTC_RELATIVE_THROTTLE_POS': {
+            'Request': '^0245' + ELM_FOOTER,
+            'Descr': 'DTC Relative throttle position',
+            'Header': ECU_ADDR_E,
+            'Response': 'NO DATA \r'
+        },
+        'DTC_AMBIANT_AIR_TEMP': {
+            'Request': '^0246' + ELM_FOOTER,
+            'Descr': 'DTC Ambient air temperature',
+            'Header': ECU_ADDR_E,
+            'Response': 'NO DATA \r'
+            # -40 degC
+        },
+        'DTC_THROTTLE_POS_B': {
+            'Request': '^0247' + ELM_FOOTER,
+            'Descr': 'DTC Absolute throttle position B',
+            'Header': ECU_ADDR_E,
+            'Response': 'NO DATA \r'
+        },
+        'DTC_ACCELERATOR_POS_D': {
+            'Request': '^0249' + ELM_FOOTER,
+            'Descr': 'DTC Accelerator pedal position D',
+            'Header': ECU_ADDR_E,
+            'Response': 'NO DATA \r'
+        },
+        'DTC_ACCELERATOR_POS_E': {
+            'Request': '^024A' + ELM_FOOTER,
+            'Descr': 'DTC Accelerator pedal position E',
+            'Header': ECU_ADDR_E,
+            'Response': 'NO DATA \r'
+        },
+        'DTC_THROTTLE_ACTUATOR': {
+            'Request': '^024C' + ELM_FOOTER,
+            'Descr': 'DTC Commanded throttle actuator',
+            'Header': ECU_ADDR_E,
+            'Response': 'NO DATA \r'
+        },
+        'GET_DTC': {
+            'Request': '^03' + ELM_FOOTER,
+            'Descr': 'Get DTCs',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('02') + DT('43 00 AA AA AA AA AA')
+        },
+        'MIDS_A': {
+            'Request': '^0600' + ELM_FOOTER,
+            'Descr': 'Supported MIDs [01-20]',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('06') + DT('46 00 CC 00 00 01 AA')
+        },
+        'MONITOR_O2_B1S1': {
+            'Request': '^0601' + ELM_FOOTER,
+            'Descr': 'O2 Sensor Monitor Bank 1 - Sensor 1',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('10') + DT('49 46 01 01 0A 00 00') +
+                        HD(ECU_R_ADDR_E) + SZ('21') + DT('00 00 00 00 01 02 0A') +
+                        HD(ECU_R_ADDR_E) + SZ('22') + DT('00 00 00 00 00 00 01') +
+                        HD(ECU_R_ADDR_E) + SZ('23') + DT('03 0A 09 9C 09 9C 09') +
+                        HD(ECU_R_ADDR_E) + SZ('24') + DT('9C 01 04 0A 13 39 13') +
+                        HD(ECU_R_ADDR_E) + SZ('25') + DT('39 13 39 01 05 10 00') +
+                        HD(ECU_R_ADDR_E) + SZ('26') + DT('00 00 00 00 00 01 06') +
+                        HD(ECU_R_ADDR_E) + SZ('27') + DT('10 00 00 00 00 00 00') +
+                        HD(ECU_R_ADDR_E) + SZ('28') + DT('01 80 2B 00 00 00 00') +
+                        HD(ECU_R_ADDR_E) + SZ('29') + DT('00 00 01 81 2B 00 00') +
+                        HD(ECU_R_ADDR_E) + SZ('2A') + DT('00 00 00 00 AA AA AA')
+        },
+        'MONITOR_O2_B1S2': {
+            'Request': '^0602' + ELM_FOOTER,
+            'Descr': 'O2 Sensor Monitor Bank 1 - Sensor 2',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('10') + DT('1C 46 02 8A 24 00 00') +
+                        HD(ECU_R_ADDR_E) + SZ('21') + DT('00 00 00 00 02 8B 0A') +
+                        HD(ECU_R_ADDR_E) + SZ('22') + DT('00 00 00 00 00 00 02') +
+                        HD(ECU_R_ADDR_E) + SZ('23') + DT('8C 0A 00 00 00 00 00') +
+                        HD(ECU_R_ADDR_E) + SZ('24') + DT('00 AA AA AA AA AA AA')
+        },
+        'MONITOR_O2_B2S1': {
+            'Request': '^0605' + ELM_FOOTER,
+            'Descr': 'O2 Sensor Monitor Bank 2 - Sensor 1',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('10') + DT('49 46 05 01 0A 00 00') +
+                        HD(ECU_R_ADDR_E) + SZ('21') + DT('00 00 00 00 05 02 0A') +
+                        HD(ECU_R_ADDR_E) + SZ('22') + DT('00 00 00 00 00 00 05') +
+                        HD(ECU_R_ADDR_E) + SZ('23') + DT('03 0A 09 9C 09 9C 09') +
+                        HD(ECU_R_ADDR_E) + SZ('24') + DT('9C 05 04 0A 13 39 13') +
+                        HD(ECU_R_ADDR_E) + SZ('25') + DT('39 13 39 05 05 10 00') +
+                        HD(ECU_R_ADDR_E) + SZ('26') + DT('00 00 00 00 00 05 06') +
+                        HD(ECU_R_ADDR_E) + SZ('27') + DT('10 00 00 00 00 00 00') +
+                        HD(ECU_R_ADDR_E) + SZ('28') + DT('05 80 2B 00 00 00 00') +
+                        HD(ECU_R_ADDR_E) + SZ('29') + DT('00 00 05 81 2B 00 00') +
+                        HD(ECU_R_ADDR_E) + SZ('2A') + DT('00 00 00 00 AA AA AA')
+        },
+        'MONITOR_O2_B2S2': {
+            'Request': '^0606' + ELM_FOOTER,
+            'Descr': 'O2 Sensor Monitor Bank 2 - Sensor 2',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('10') + DT('1C 46 06 8A 24 00 00') +
+                        HD(ECU_R_ADDR_E) + SZ('21') + DT('00 00 00 00 06 8B 0A') +
+                        HD(ECU_R_ADDR_E) + SZ('22') + DT('00 00 00 00 00 00 06') +
+                        HD(ECU_R_ADDR_E) + SZ('23') + DT('8C 0A 00 00 00 00 00') +
+                        HD(ECU_R_ADDR_E) + SZ('24') + DT('00 AA AA AA AA AA AA')
+        },
+        'MIDS_B': {
+            'Request': '^0620' + ELM_FOOTER,
+            'Descr': 'Supported MIDs [21-40]',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('06') + DT('46 20 C0 00 00 59 AA')
+        },
+        'MONITOR_CATALYST_B1': {
+            'Request': '^0621' + ELM_FOOTER,
+            'Descr': 'Catalyst Monitor Bank 1',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('10') + DT('0A 46 21 A0 05 00 00') +
+                        HD(ECU_R_ADDR_E) + SZ('21') + DT('00 00 00 00 AA AA AA')
+        },
+        'MONITOR_CATALYST_B2': {
+            'Request': '^0622' + ELM_FOOTER,
+            'Descr': 'Catalyst Monitor Bank 2',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('10') + DT('0A 46 22 A0 05 00 00') +
+                        HD(ECU_R_ADDR_E) + SZ('21') + DT('00 00 00 00 AA AA AA')
+        },
+        'MONITOR_EVAP_090': {
+            'Request': '^063A' + ELM_FOOTER,
+            'Descr': 'EVAP Monitor (0.090")',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('10') + DT('13 46 3A C0 31 00 00') +
+                        HD(ECU_R_ADDR_E) + SZ('21') + DT('00 00 00 00 3A C1 11') +
+                        HD(ECU_R_ADDR_E) + SZ('22') + DT('00 00 00 00 00 00 AA')
+        },
+        'MONITOR_EVAP_020': {
+            'Request': '^063C' + ELM_FOOTER,
+            'Descr': 'EVAP Monitor (0.020")',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('10') + DT('25 46 3C C8 20 00 00') +
+                        HD(ECU_R_ADDR_E) + SZ('21') + DT('00 00 00 00 3C C9 20') +
+                        HD(ECU_R_ADDR_E) + SZ('22') + DT('00 00 00 00 00 00 3C') +
+                        HD(ECU_R_ADDR_E) + SZ('23') + DT('CA 24 00 00 00 00 00') +
+                        HD(ECU_R_ADDR_E) + SZ('24') + DT('00 3C CB 24 00 00 00') +
+                        HD(ECU_R_ADDR_E) + SZ('25') + DT('00 00 00 AA AA AA AA')
+        },
+        'MONITOR_PURGE_FLOW': {
+            'Request': '^063D' + ELM_FOOTER,
+            'Descr': 'Purge Flow Monitor',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('10') + DT('25 46 3D C4 11 00 00') +
+                        HD(ECU_R_ADDR_E) + SZ('21') + DT('00 00 00 00 3D C5 FE') +
+                        HD(ECU_R_ADDR_E) + SZ('22') + DT('00 00 00 00 00 00 3D') +
+                        HD(ECU_R_ADDR_E) + SZ('23') + DT('C6 11 00 00 00 00 00') +
+                        HD(ECU_R_ADDR_E) + SZ('24') + DT('00 3D C7 31 00 00 00') +
+                        HD(ECU_R_ADDR_E) + SZ('25') + DT('00 00 00 AA AA AA AA')
+        },
+        'MIDS_C': {
+            'Request': '^0640' + ELM_FOOTER,
+            'Descr': 'Supported MIDs [41-60]',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('06') + DT('46 40 CC 00 00 01 AA')
+        },
+        'MONITOR_O2_HEATER_B1S1': {
+            'Request': '^0641' + ELM_FOOTER,
+            'Descr': 'O2 Sensor Heater Monitor Bank 1 - Sensor 1',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('10') + DT('13 46 41 D2 24 00 00') +
+                        HD(ECU_R_ADDR_E) + SZ('21') + DT('00 00 00 08 41 D3 84') +
+                        HD(ECU_R_ADDR_E) + SZ('22') + DT('FE 4B EF 8D 09 B1 AA')
+        },
+        'MONITOR_O2_HEATER_B1S2': {
+            'Request': '^0642' + ELM_FOOTER,
+            'Descr': 'O2 Sensor Heater Monitor Bank 1 - Sensor 2',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('10') + DT('13 46 42 D2 24 00 00') +
+                        HD(ECU_R_ADDR_E) + SZ('21') + DT('00 00 00 00 42 D3 84') +
+                        HD(ECU_R_ADDR_E) + SZ('22') + DT('00 00 00 00 00 00 AA')
+        },
+        'MONITOR_O2_HEATER_B2S1': {
+            'Request': '^0645' + ELM_FOOTER,
+            'Descr': 'O2 Sensor Heater Monitor Bank 2 - Sensor 1',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('10') + DT('13 46 45 D2 24 00 00') +
+                        HD(ECU_R_ADDR_E) + SZ('21') + DT('00 00 00 08 45 D3 84') +
+                        HD(ECU_R_ADDR_E) + SZ('22') + DT('FE 5E EF 8D 09 B1 AA')
+        },
+        'MONITOR_O2_HEATER_B2S2': {
+            'Request': '^0646' + ELM_FOOTER,
+            'Descr': 'O2 Sensor Heater Monitor Bank 2 - Sensor 2',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('10') + DT('13 46 46 D2 24 00 00') +
+                        HD(ECU_R_ADDR_E) + SZ('21') + DT('00 00 00 00 46 D3 84') +
+                        HD(ECU_R_ADDR_E) + SZ('22') + DT('00 00 00 00 00 00 AA')
+        },
+        'MIDS_D': {
+            'Request': '^0660' + ELM_FOOTER,
+            'Descr': 'Supported MIDs [61-80]',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('06') + DT('46 60 00 00 00 01 AA')
+        },
+        'MIDS_E': {
+            'Request': '^0680' + ELM_FOOTER,
+            'Descr': 'Supported MIDs [81-A0]',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('06') + DT('46 80 00 00 00 01 AA')
+        },
+        'MIDS_F': {
+            'Request': '^06A0' + ELM_FOOTER,
+            'Descr': 'Supported MIDs [A1-C0]',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('06') + DT('46 A0 7F 80 00 00 AA')
+        },
+        'MONITOR_MISFIRE_CYLINDER_1': {
+            'Request': '^06A2' + ELM_FOOTER,
+            'Descr': 'Misfire Cylinder 1 Data',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('10') + DT('13 46 A2 0B 24 00 00') +
+                        HD(ECU_R_ADDR_E) + SZ('21') + DT('00 00 00 00 A2 0C 24') +
+                        HD(ECU_R_ADDR_E) + SZ('22') + DT('00 00 00 00 00 00 AA')
+        },
+        'MONITOR_MISFIRE_CYLINDER_2': {
+            'Request': '^06A3' + ELM_FOOTER,
+            'Descr': 'Misfire Cylinder 2 Data',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('10') + DT('13 46 A3 0B 24 00 00') +
+                        HD(ECU_R_ADDR_E) + SZ('21') + DT('00 00 00 00 A3 0C 24') +
+                        HD(ECU_R_ADDR_E) + SZ('22') + DT('00 00 00 00 00 00 AA')
+        },
+        'MONITOR_MISFIRE_CYLINDER_3': {
+            'Request': '^06A4' + ELM_FOOTER,
+            'Descr': 'Misfire Cylinder 3 Data',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('10') + DT('13 46 A4 0B 24 00 00') +
+                        HD(ECU_R_ADDR_E) + SZ('21') + DT('00 00 00 00 A4 0C 24') +
+                        HD(ECU_R_ADDR_E) + SZ('22') + DT('00 00 00 00 00 00 AA')
+        },
+        'MONITOR_MISFIRE_CYLINDER_4': {
+            'Request': '^06A5' + ELM_FOOTER,
+            'Descr': 'Misfire Cylinder 4 Data',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('10') + DT('13 46 A5 0B 24 00 00') +
+                        HD(ECU_R_ADDR_E) + SZ('21') + DT('00 00 00 00 A5 0C 24') +
+                        HD(ECU_R_ADDR_E) + SZ('22') + DT('00 00 00 00 00 00 AA')
+        },
+        'MONITOR_MISFIRE_CYLINDER_5': {
+            'Request': '^06A6' + ELM_FOOTER,
+            'Descr': 'Misfire Cylinder 5 Data',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('10') + DT('13 46 A6 0B 24 00 00') +
+                        HD(ECU_R_ADDR_E) + SZ('21') + DT('00 00 00 00 A6 0C 24') +
+                        HD(ECU_R_ADDR_E) + SZ('22') + DT('00 00 00 00 00 00 AA')
+        },
+        'MONITOR_MISFIRE_CYLINDER_6': {
+            'Request': '^06A7' + ELM_FOOTER,
+            'Descr': 'Misfire Cylinder 6 Data',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('10') + DT('13 46 A7 0B 24 00 00') +
+                        HD(ECU_R_ADDR_E) + SZ('21') + DT('00 00 00 00 A7 0C 24') +
+                        HD(ECU_R_ADDR_E) + SZ('22') + DT('00 00 00 00 00 00 AA')
+        },
+        'MONITOR_MISFIRE_CYLINDER_7': {
+            'Request': '^06A8' + ELM_FOOTER,
+            'Descr': 'Misfire Cylinder 7 Data',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('10') + DT('13 46 A8 0B 24 00 00') +
+                        HD(ECU_R_ADDR_E) + SZ('21') + DT('00 00 00 00 A8 0C 24') +
+                        HD(ECU_R_ADDR_E) + SZ('22') + DT('00 00 00 00 00 00 AA')
+        },
+        'MONITOR_MISFIRE_CYLINDER_8': {
+            'Request': '^06A9' + ELM_FOOTER,
+            'Descr': 'Misfire Cylinder 8 Data',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('10') + DT('13 46 A9 0B 24 00 00') +
+                        HD(ECU_R_ADDR_E) + SZ('21') + DT('00 00 00 00 A9 0C 24') +
+                        HD(ECU_R_ADDR_E) + SZ('22') + DT('00 00 00 00 00 00 AA')
+        },
+        'GET_CURRENT_DTC': {
+            'Request': '^07' + ELM_FOOTER,
+            'Descr': 'Get DTCs from the current/last driving cycle',
+            'Header': ECU_ADDR_E,
+            'Response': HD(ECU_R_ADDR_E) + SZ('02') + DT('47 00 AA AA AA AA AA')
+        },
+        'VIN': { # Check this also: https://stackoverflow.com/a/26752855/10598800, https://www.autocheck.com/vehiclehistory/autocheck/en/vinbasics
+            'Request': '^0902' + ELM_FOOTER,
+            'Descr': 'Vehicle Identification Number',
+            'Response': PA("00 00 00 00 00 00 00 00 00 00")
+        },
+    },
 }

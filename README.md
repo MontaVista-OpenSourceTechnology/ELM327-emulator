@@ -1,6 +1,7 @@
 ELM327-emulator
 ===============
 
+## How to change vin number
 CHANGING VIN THROUGH COMMAND LINE
 
 Using the -A tag followed by string to set the VIN number.
