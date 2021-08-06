@@ -1616,12 +1616,15 @@ class Elm:
                     break
                 unspaced_data = (data.text or "").translate(
                     (data.text or "").maketrans('', '', string.whitespace))
-                if int_size < 16 and len(unspaced_data) != int_size * 2:
+                if len(unspaced_data) != int_size * 2:# and int_size < 16: omer's changes
+                    data.text = data.text[0:int_size*3 -1] #math: bytes in two + 1 for space then subtract one for last space
+                    """
                     logging.error(
                         'In response %s, mismatch between number of data '
                         'digits %s and related length field %s.',
                         repr(resp), repr(data.text), repr(size.text))
                     break
+                    """
                 incomplete_resp = False
                 if re.match(cra_pattern, i.text.upper()):
                     # concatenate answ from header, size and data/subd

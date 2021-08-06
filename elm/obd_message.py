@@ -606,11 +606,13 @@ ObdMessage = {
         'ENGINE_LOAD': {
             'Request': '^0104' + ELM_FOOTER,
             'Descr': 'Calculated Engine Load',
-            'ResponseFooter': \
-            lambda self, cmd, pid, uc_val: (
-                PA(HD(ECU_R_ADDR_H) + SZ('03') + DT('41 04 '
-                + str(hex(random.randint(0, 255)))))
-            )
+            'Task': 'task_0104'
+            
+            #'ResponseFooter': \
+            #lambda self, cmd, pid, uc_val: (
+            #    PA(HD(ECU_R_ADDR_H) + SZ('03') + DT('41 04 '
+            #    + str(hex(random.randint(0, 255)))))
+            #)
             
 
         },
@@ -643,12 +645,7 @@ ObdMessage = {
         'SPEED': {
             'Request': '^010D' + ELM_FOOTER,
             'Descr': 'Vehicle Speed',
-            'ResponseFooter': \
-            lambda self, cmd, pid, uc_val: (
-                PA(self.sequence(pid, base=0, max=30, factor=4, n_bytes=1))
-                + ' ' + HD(ECU_R_ADDR_H) + SZ('03') + DT('41 0D '
-                + self.sequence(pid, base=0, max=30, factor=4, n_bytes=1))
-            )
+            'Task': 'task_speed'
         },
         'INTAKE_TEMP': {
             'Request': '^010F' + ELM_FOOTER,
